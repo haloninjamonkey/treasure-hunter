@@ -12,6 +12,7 @@ namespace treasure_hunt.Models
             Room secondRoom = new Room("Ante Chamber", "A dark room with a narrow walkway that splits and leads to two more doors", true);
             Room thirdRoom = new Room("Treasure Room", "A room with a high ceiling, and several pillars which form an aisle, leading to a set of stairs, upon which rests a dias with a treasure chest.", true);
             Room outside = new Room("Outdoors", "Well, you're now outside of the temple, so...", true);
+            //comment
 
             outside.Exits.Add(entry);
             CurrentRoom = outside;
