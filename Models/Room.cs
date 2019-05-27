@@ -8,7 +8,8 @@ namespace treasure_hunt.Models
         public string Description { get; set; }
         public List<Item> Inventory { get; set; } = new List<Item>();
         // public Dictionary<string, Room> Exits { get; set; }
-        public List<Room> Exits { get; set; } = new List<Room>();
+        // public List<Room> Exits { get; set; } = new List<Room>();
+        public Room[] Exits { get; set; } = new Room[4];
         public bool IsLosable { get; set; }
 
         public Room(string name, string description, bool losable)
