@@ -117,7 +117,7 @@ namespace treasure_hunt.Models
                     if (CurrentRoom.Exits[0] != CurrentRoom)
                     {
                         CurrentRoom = CurrentRoom.Exits[0];
-                        System.Console.WriteLine($"You are now in the {CurrentRoom.Name}");
+                        System.Console.WriteLine($"You are now in the {CurrentRoom.Name}. \nIt is {CurrentRoom.Description}");
                         System.Console.Write("What would you like to do now? ");
                         Navigation();
                         break;
@@ -171,6 +171,9 @@ namespace treasure_hunt.Models
                 case "take":
                     TakeTreasure();
                     break;
+                case "inventory":
+                    ListInventory();
+                    break;
                 case "help":
                     Menu();
                     break;
@@ -200,8 +203,9 @@ namespace treasure_hunt.Models
                 {
                     System.Console.WriteLine($"\nYou have chosen to end the treasure hunt. Farewell, {ActivePlayer.Name}");
                 }
-            } 
-            else{
+            }
+            else
+            {
                 System.Console.Write("What would you like to do? ");
                 Navigation();
             }
@@ -224,7 +228,7 @@ namespace treasure_hunt.Models
 
         public void Menu()
         {
-            System.Console.WriteLine("\n********************************\nControls:\nGo <direction>: proceed to the next room in the chosen direction (North, South, East, West)\nLook: Get a description of the current room.\nTake: Pick up any treasure (when available)\nHelp: Displays this list\nQuit: Leave the game.\n********************************\n");
+            System.Console.WriteLine("\n********************************\nControls:\nGo <direction>: proceed to the next room in the chosen direction (North, South, East, West)\nLook: Get a description of the current room.\nTake: Pick up any treasure (when available)\nInventory: Displays the items currently in your inventory\nHelp: Displays this list\nQuit: Leave the game.\n********************************\n");
             System.Console.WriteLine("The goal of the game is to get at least 12lbs of treasure. \nBe careful though, danger lies at every step!\n");
             System.Console.Write("What would you like to do? ");
             Navigation();
@@ -235,9 +239,8 @@ namespace treasure_hunt.Models
             {
                 Random rnd = new Random();
                 int rndTreasure = rnd.Next(0, (CurrentRoom.Inventory.Count));
-                System.Console.WriteLine(rndTreasure);
                 System.Console.WriteLine($"You found {CurrentRoom.Inventory[rndTreasure].Name}!");
-                ActivePlayer.Inventory.Add(CurrentRoom.Inventory[0]);
+                ActivePlayer.Inventory.Add(CurrentRoom.Inventory[rndTreasure]);
                 ActivePlayer.Encumberance += CurrentRoom.Inventory[rndTreasure].Weight;
                 System.Console.WriteLine($"You are now carrying {ActivePlayer.Encumberance} lbs of treasure");
                 CurrentRoom.Inventory.Remove(CurrentRoom.Inventory[rndTreasure]);
@@ -250,7 +253,26 @@ namespace treasure_hunt.Models
                 Navigation();
             }
         }
+        public void ListInventory()
+        {
+            if (ActivePlayer.Inventory.Count != 0)
+            {
+                System.Console.WriteLine("Current Inventory:");
+                for (int i = 0; i < ActivePlayer.Inventory.Count; i++)
+                {
+                    System.Console.WriteLine((i + 1) + " " + ActivePlayer.Inventory[i].Name);
+                }
+                System.Console.Write("What would you like to do now? ");
+                Navigation();
+            }
+            else
+            {
 
+                System.Console.WriteLine("You have not found any treasure yet, keep looking!");
+                System.Console.Write("What would you like to do? ");
+                Navigation();
+            }
+        }
         public void Danger()
         {
             Random rnd = new Random();
